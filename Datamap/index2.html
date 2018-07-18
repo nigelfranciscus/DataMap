@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+
+<script src="../src/js/components/d3/d3.min.js"></script>
+<script src="../src/js/components/topojson/topojson.js"></script>
+<!-- I recommend you host this file on your own, since this will change without warning -->
+<script src="../dist/datamaps.world.hires.js"></script>
+<script type="text/javascript" src="one.json"></script>
+<div id="container" style="position: relative; width: 80%; max-height: 450px;"></div>
+
+
+<script>
+    //basic map config with custom fills, mercator projection
+    //var json_one = JSON.parse(one)
+    var width = 1600;
+    var height = 1000;
+    var map = new Datamap({
+        scope: 'world',
+        element: document.getElementById('container'),
+        projection: 'mercator',
+        height: height,
+        width: width,
+        setProjection: function () {
+            var projection = d3.geo.mercator()
+                .rotate([0, 0])
+                .scale(width / 2 / Math.PI)
+                .translate([width / 2, height / 2]);
+            var path = d3.geo.path().projection(projection);
+            return {path: path, projection: projection};
+        },
+        fills: {
+            defaultFill: '#757471',
+            a: 'grey',
+            b: '#e04345',
+            c: {strokeColor: "green", strokeWidth: 1},
+            d: {strokeColor: "orange", strokeWidth: 3},
+
+        },
+
+        data: {
+            AUS: {fillKey: 'a'}
+
+        }
+    })
+
+
+    //sample of the arc plugin
+    map.arc([
+{origin:{ latitude: 33.58589935, longitude: 130.451004}, destination: { latitude: 35.552299, longitude: 139.779999}, strokeWidth: 5.0, strokeColor: 'blue', arcSharpness: 0.1 },
+{origin:{ latitude: 33.94250107, longitude: -118.4079971}, destination: { latitude: 40.63980103, longitude: -73.77890015}, strokeWidth: 4.585, strokeColor: 'blue', arcSharpness: 0.1 },
+{origin:{ latitude: 40.63980103, longitude: -73.77890015}, destination: { latitude: 33.94250107, longitude: -118.4079971}, strokeWidth: 4.374, strokeColor: 'blue', arcSharpness: 0.1 },
+{origin:{ latitude: 25.25279999, longitude: 55.36439896}, destination: { latitude: 51.4706, longitude: -0.461941}, strokeWidth: 2.688, strokeColor: 'blue', arcSharpness: 0.1 },
+{origin:{ latitude: 42.77519989, longitude: 141.6920013}, destination: { latitude: 35.552299, longitude: 139.779999}, strokeWidth: 2.582, strokeColor: 'blue', arcSharpness: 0.1 },
+{origin:{ latitude: 28.5665, longitude: 77.103104}, destination: { latitude: 19.08869934, longitude: 72.86789703}, strokeWidth: 2.279, strokeColor: 'blue', arcSharpness: 0.1 },
+{origin:{ latitude: 51.4706, longitude: -0.461941}, destination: { latitude: 40.63980103, longitude: -73.77890015}, strokeWidth: 2.081, strokeColor: 'blue', arcSharpness: 0.1 },
+{origin:{ latitude: 35.552299, longitude: 139.779999}, destination: { latitude: 42.77519989, longitude: 141.6920013}, strokeWidth: 1.927, strokeColor: 'blue', arcSharpness: 0.1 },
+{origin:{ latitude: 19.08869934, longitude: 72.86789703}, destination: { latitude: 28.5665, longitude: 77.103104}, strokeWidth: 1.874, strokeColor: 'blue', arcSharpness: 0.1 },
+{origin:{ latitude: 40.63980103, longitude: -73.77890015}, destination: { latitude: 51.4706, longitude: -0.461941}, strokeWidth: 1.85, strokeColor: 'blue', arcSharpness: 0.1 },
+
+
+    ]);
+
+
+    //bubbles, custom popup on hover template
+    /*
+	 map.bubbles([
+       {name: 'Hot', latitude: 21.32, longitude: 5.32, radius: 10, fillKey: 'b'},
+       {name: 'Chilly', latitude: -25.32, longitude: 120.32, radius: 18, fillKey: 'a'},
+       {name: 'Hot again', latitude: 21.32, longitude: -84.32, radius: 8, fillKey: 'b'},
+
+     ], {
+       popupTemplate: function(geo, data) {
+         return "<div class='hoverinfo'>It is " + data.name + "</div>";
+       }
+     });
+	 */
+</script>
+</body>
